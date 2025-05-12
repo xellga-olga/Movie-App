@@ -13,7 +13,7 @@ const MovieCard = ({ title, imageUrl, overview }) =>  {
           <img
             src={imageUrl}
             alt="Image"
-            className="w-ful h-full object-cover "
+            className="w-ful h-full object-cover text-white"
           />
           {showOverview && (
             <div className="absolute inset-0 bg-gray-950 bg-opacity-80  text-amber-50 font-bold flex items-center justify-center text-center p-5 transition duration-300">

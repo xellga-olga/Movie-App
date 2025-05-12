@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react"
 import { cn } from "../../lib/utils"
 
-const Input = forwardRef(({ className, ...props }, ref) => {
+const Input = forwardRef(({ className, ...props}, ref) => {
   return (
     <input
       ref={ref}

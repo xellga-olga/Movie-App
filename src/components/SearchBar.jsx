@@ -1,17 +1,29 @@
-import React from "react";
+import React, {useState} from "react";
 import Input from "../components/ui/Input";
 import { Search } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "../components/ui/Avatar";
 import Button from "./ui/Button.jsx";
 
-const SearchBar = () => {
+const SearchBar = ({onSearch}) => {
+  const [text, setText] = useState("");
+
+  const handleOnClick = () => {
+    onSearch(text);
+    console.log('search movie',text);
+  }
+
   return (
     <div className='bg-black flex items-center justify-between p-4 min-h-[80px]'>
       <h1 className="text-4xl font-bold text-white">Search Movie</h1>
 
       <div className="flex items-center gap-2 w-full max-w-md justify-center">
-         <Input placeholder="Enter movie name..." className="text-gray-700 font-bold" />
-         <Button className='p-2'>
+         <Input
+           placeholder="Enter movie name..."
+           className="text-gray-700 font-bold"
+           onChange={(e) => setText(e.target.value)}
+           value={text}
+         />
+         <Button className='p-2' onClick={handleOnClick}>
            <Search className="h-4 w-4 text-white " />
          </Button>
       </div>

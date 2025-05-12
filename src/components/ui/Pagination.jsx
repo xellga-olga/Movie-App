@@ -1,53 +1,61 @@
-// components/ui/Pagination.jsx
 import React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Pagination = ({ totalPages, currentPage, onPageChange }) => {
-  const pageNumbers = [];
 
-  const generatePages = () => {
-    pageNumbers.push(1, 2, 3, '...');
+  const generatePageNumbers = () => {
+
+    const pages = [];
+
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        pages.push(1, 2, 3, "...", totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
+      }
+    }
+
+    return pages;
   };
 
-  generatePages();
+  const pageNumbers = generatePageNumbers();
 
   return (
-    <div className="flex justify-center items-center space-x-2 mt-8">
+    <div className="flex justify-center items-center space-x-2 mt-8 text-white  mb-4">
 
-      {/* Кнопка "Previous" */}
       <button
-        onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
+        onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="w-24 h-10 flex justify-center items-center rounded-md border border-gray-700 bg-black hover:bg-gray-800 text-white transition disabled:opacity-50 "
+        className="px-3 py-1 border rounded disabled:opacity-50"
       >
-        <ChevronLeft className="h-4 w-4" />
-        Previous
+        <ChevronLeft className="w-4 h-4 inline" /> Prev
       </button>
 
-      {/* Номера страниц */}
       {pageNumbers.map((page, index) => (
         <button
           key={index}
-          onClick={() => typeof page === 'number' && onPageChange(page)}
-          disabled={page === '...'}
-          className={`w-10 h-10 flex justify-center items-center rounded-md border ${
-            page === currentPage
-              ? "bg-gray-100 text-black"
-              : "bg-black hover:bg-gray-800 text-white"
-          } transition`}
+          onClick={() => typeof page === "number" && onPageChange(page)}
+          disabled={page === "..."}
+          className={`px-3 py-1 border rounded ${
+            page === currentPage ? "bg-white text-black" : "bg-black hover:bg-gray-700"
+          }`}
         >
           {page}
         </button>
       ))}
 
-      {/* Кнопка "Next" */}
       <button
-        onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
+        onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="w-16 h-10 flex justify-center items-center rounded-md border border-gray-700 bg-black hover:bg-gray-800 text-white transition disabled:opacity-50"
+        className="px-3 py-1 border rounded disabled:opacity-50"
       >
-        Next
-        <ChevronRight className="h-4 w-4" />
+        Next <ChevronRight className="w-4 h-4 inline" />
       </button>
 
     </div>
